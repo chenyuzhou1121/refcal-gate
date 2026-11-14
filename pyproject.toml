@@ -1,0 +1,21 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "refcal-gate"
+version = "0.1.0"
+description = "Reference-calibrated visual anomaly gates and edge-cloud routing"
+requires-python = ">=3.11"
+dependencies = ["numpy>=1.26", "Pillow>=10", "torch>=2.2", "transformers>=4.45,<5"]
+
+[project.optional-dependencies]
+cloud = ["openai>=1.30"]
+data = ["pyarrow>=14"]
+server = ["fastapi>=0.115", "uvicorn>=0.30", "python-multipart>=0.0.18"]
+
+[project.scripts]
+refcal-gate = "refcal_gate.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["refcal_gate*"]

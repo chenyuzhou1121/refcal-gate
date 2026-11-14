@@ -1,0 +1,63 @@
+[data]
+# Image tree containing category/train/normal-label and category/test/label folders.
+root = "/path/to/data"
+# Category directory names; an empty list discovers categories under root.
+categories = []
+# First sorted normal images per category; at least two are required.
+references_per_category = 5
+# Query sampling cap per category; zero keeps all queries before selection.
+per_category_limit = 0
+# Seed for capped query sampling and query-order shuffling.
+seed = 42
+# Optional JSON array of unique relative query IDs, applied after sampling.
+selection = ""
+
+[encoder]
+# Frozen image encoder family: clip or dinov2.
+backbone = "clip"
+# Model identifier or local directory; empty uses the backbone default.
+model = "openai/clip-vit-base-patch32"
+# Whole-image CLIP model used to rank references for cloud controls.
+retrieval_model = "openai/clip-vit-base-patch32"
+# Torch device; auto selects CUDA when available, otherwise CPU.
+device = "auto"
+# Number of crop rows and columns; must be at least two.
+grid_size = 3
+# Maximum images or crops per encoder forward pass; must be positive.
+batch_size = 32
+
+[gate]
+# Patch aggregation: max_excess, position_z, or local_covariance.
+score = "max_excess"
+# Empirical quantile in (0, 1] of leave-one-out normal scores for the threshold.
+quantile = 0.85
+
+[cloud]
+# Chat-completion API base URL; replace this placeholder for cloud calls.
+base_url = "https://api.example.com/v1"
+# Environment variable overriding base_url when set.
+base_url_env = "REFCAL_API_BASE"
+# Vision-capable model name accepted by the configured API.
+model = "vision-model"
+# Environment variable overriding model when set.
+model_env = "REFCAL_CLOUD_MODEL"
+# Name of the environment variable holding the API credential.
+api_key_env = "REFCAL_API_KEY"
+# Positive completion-token limit sent to the API.
+max_tokens = 2048
+# Positive API timeout in seconds.
+timeout = 120.0
+# Sampling temperature sent to the API.
+temperature = 0.0
+# Response format: label or decision JSON; prediction uses the judgment field.
+prompt_mode = "json"
+# Built-in reference prompt policy: standard or sensitive.
+reference_policy = "standard"
+# Send chat_template_kwargs.enable_thinking=false when the API supports it.
+disable_thinking = false
+# Optional JSON prompt overrides; see README for supported keys.
+prompt_file = ""
+
+[routing]
+# Batch fraction in [0, 1] sent to cloud, rounded down to a whole-image count.
+cloud_fraction = 0.5

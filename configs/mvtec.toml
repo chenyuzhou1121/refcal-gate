@@ -1,0 +1,38 @@
+[data]
+# Root of the extracted category image tree.
+root = "/path/to/mvtec"
+# Category directories to read, or shard categories to extract with prepare.
+categories = ["bottle", "cable", "capsule", "carpet", "grid", "hazelnut", "leather", "metal_nut", "pill", "screw", "tile", "toothbrush", "transistor", "wood", "zipper"]
+# First sorted normal images per category; at least two are required.
+references_per_category = 10
+# Query sampling cap per category; zero keeps all queries.
+per_category_limit = 15
+# Seed for capped query sampling and query-order shuffling.
+seed = 42
+
+[encoder]
+# Frozen image encoder family: clip or dinov2.
+backbone = "clip"
+# Model identifier or local directory; empty uses the backbone default.
+model = "openai/clip-vit-base-patch32"
+# Number of crop rows and columns; must be at least two.
+grid_size = 3
+
+[gate]
+# Patch aggregation: max_excess, position_z, or local_covariance.
+score = "max_excess"
+# Empirical normal-score threshold quantile in (0, 1].
+quantile = 0.8
+
+[cloud]
+# Chat-completion API base URL; replace this placeholder for cloud calls.
+base_url = "https://api.example.com/v1"
+# Vision-capable model name; REFCAL_CLOUD_MODEL overrides it when set.
+model = "vision-model"
+# Decision-format JSON and standard comparative reference policy.
+prompt_mode = "json"
+reference_policy = "standard"
+
+[routing]
+# Batch fraction in [0, 1] sent to cloud, rounded down to a whole-image count.
+cloud_fraction = 0.5
