@@ -16,7 +16,7 @@ def add_dataset_options(parser, include_queries=True):
     parser.add_argument("--references", type=int, help="Normal references per category")
     if include_queries:
         parser.add_argument("--per-category-limit", type=int, help="Maximum test images per category; zero selects all")
-        parser.add_argument("--selection", help="JSON array of relative query IDs in evaluation order")
+        parser.add_argument("--selection", help="Path to a JSON file with an array of relative query IDs in evaluation order")
         parser.add_argument("--seed", type=int, help="Dataset sampling seed")
     parser.add_argument("--device", help="Encoder device, such as cpu, cuda:0 or auto")
 

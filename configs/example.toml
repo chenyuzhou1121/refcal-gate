@@ -9,7 +9,7 @@ references_per_category = 5
 per_category_limit = 0
 # Seed for capped query sampling and query-order shuffling.
 seed = 42
-# Optional JSON array of unique relative query IDs, applied after sampling.
+# Optional path to a JSON file with an array of unique relative query IDs, applied after sampling.
 selection = ""
 
 [encoder]

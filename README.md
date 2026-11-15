@@ -96,11 +96,11 @@ The output contains the image tree, `counts.json`, and `run.log`; downloaded sha
 Use `configs/visa.toml` or `configs/mvtec.toml` in place of `configs/example.toml` for the dataset settings; both specify decision-format JSON and the standard reference policy.
 Relative paths resolve from the working directory. Dataset commands require `--config`; `--data-root` overrides `data.root` where offered.
 `data.categories = []` discovers category directories; `prepare` requires explicit categories. References use sorted paths; `data.seed` controls query sampling and shuffling.
-`data.per_category_limit` caps query sampling before `data.selection`, an optional JSON array such as `["part/test/good/query.png"]` that also sets query order.
+`data.per_category_limit` caps query sampling before `data.selection`, an optional path to a JSON file holding an array of relative query IDs such as `["part/test/good/query.png"]`; the array also sets query order.
 `encoder` selects the backbone, model, device, grid, and batch size; `retrieval_model` selects the whole-image CLIP model for reference controls.
 `gate.score` accepts `max_excess`, `position_z`, or `local_covariance`; `gate.quantile` selects an empirical leave-one-out normal-score threshold in `(0, 1]`.
 `cloud` defaults to `prompt_mode = "json"` and `reference_policy = "standard"`. JSON requests `judgment`, `confidence`, `action`, `reasoning`, and `root_cause`; prediction uses `judgment`. `label` mode and the `sensitive` reference policy are also available.
-`cloud.prompt_file` accepts a JSON object of string overrides with keys `query_only`, `reference`, `query_only_user`, and `reference_user`.
+`cloud.prompt_file` is a path to a JSON file holding an object of string overrides with keys `query_only`, `reference`, `query_only_user`, and `reference_user`.
 `cloud.disable_thinking` sends `chat_template_kwargs.enable_thinking=false` when enabled. `routing.cloud_fraction` supplies the default batch cloud fraction in `[0, 1]`.
 Loaded gate artifacts supply their own encoder and gate settings, with a device override available.
 
